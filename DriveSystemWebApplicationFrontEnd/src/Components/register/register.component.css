@@ -1,0 +1,18 @@
+.form-control-lg {
+    height: auto;
+    font-size: 1rem;
+  }
+  
+  .select-label {
+    position: absolute;
+    left: 1rem;
+    color: #999;
+    transition: all 0.2s;
+  }
+  
+  .form-control:focus + .select-label,
+  .form-control:not(:placeholder-shown) + .select-label {
+    top: -1rem;
+    left: 0.75rem;
+    color: #333;
+  }
