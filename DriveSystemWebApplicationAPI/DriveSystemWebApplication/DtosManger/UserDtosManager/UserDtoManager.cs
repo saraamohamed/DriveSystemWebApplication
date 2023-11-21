@@ -30,7 +30,7 @@ namespace DriveSystemWebApplication.DtosManger.UserDtosManager.UserDtos
         {
             
                 var user = userRepository
-                    .GetByCredentials(userCredentialsDto.Username,
+                    .GetByCredentials(userCredentialsDto.Email,
                                       userCredentialsDto.Password);
 
                 return user == null ?

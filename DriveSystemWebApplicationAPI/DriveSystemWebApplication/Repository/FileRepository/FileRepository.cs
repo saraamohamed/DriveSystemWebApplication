@@ -36,7 +36,16 @@ namespace DriveSystemWebApplication.Repository.FileRepository
 
         public bool Insert(Models.File entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dbContext.Files.Add(entity);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void Update(int id, Models.File entity)

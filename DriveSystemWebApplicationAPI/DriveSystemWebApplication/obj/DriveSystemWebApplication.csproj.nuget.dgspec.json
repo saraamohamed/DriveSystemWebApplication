@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\interview tasks\\Codid Tast\\Drive-System\\DriveSystemWebApplication\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj": {}
+    "G:\\interview tasks\\New folder\\DriveSystemWebApplication\\DriveSystemWebApplicationAPI\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj": {}
   },
   "projects": {
-    "G:\\interview tasks\\Codid Tast\\Drive-System\\DriveSystemWebApplication\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj": {
+    "G:\\interview tasks\\New folder\\DriveSystemWebApplication\\DriveSystemWebApplicationAPI\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\interview tasks\\Codid Tast\\Drive-System\\DriveSystemWebApplication\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj",
+        "projectUniqueName": "G:\\interview tasks\\New folder\\DriveSystemWebApplication\\DriveSystemWebApplicationAPI\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj",
         "projectName": "DriveSystemWebApplication",
-        "projectPath": "G:\\interview tasks\\Codid Tast\\Drive-System\\DriveSystemWebApplication\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj",
+        "projectPath": "G:\\interview tasks\\New folder\\DriveSystemWebApplication\\DriveSystemWebApplicationAPI\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj",
         "packagesPath": "C:\\Users\\saram\\.nuget\\packages\\",
-        "outputPath": "G:\\interview tasks\\Codid Tast\\Drive-System\\DriveSystemWebApplication\\DriveSystemWebApplication\\obj\\",
+        "outputPath": "G:\\interview tasks\\New folder\\DriveSystemWebApplication\\DriveSystemWebApplicationAPI\\DriveSystemWebApplication\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\saram\\AppData\\Roaming\\NuGet\\NuGet.Config",
