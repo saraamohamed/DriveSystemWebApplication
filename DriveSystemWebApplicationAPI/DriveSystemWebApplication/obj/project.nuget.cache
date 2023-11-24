@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "o1ny4TAp3thPioixq8HOtZMEuwQ/3uCs4UroT1k59BS58eq2QV5pC4Aibai4tEIVoLIpTcwn9ApBJAPFUkbkEw==",
+  "dgSpecHash": "oMr/IYEqdBRKLWKW+qN65U4kPDSX2ndTAxYVxVUltjatSTdjOSsCQrSxDyIowZCWBzfEBEzgSge5UcKNYavQfg==",
   "success": true,
   "projectFilePath": "G:\\interview tasks\\New folder\\DriveSystemWebApplication\\DriveSystemWebApplicationAPI\\DriveSystemWebApplication\\DriveSystemWebApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\saram\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\saram\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\saram\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\saram\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.7\\microsoft.aspnetcore.authentication.jwtbearer.7.0.7.nupkg.sha512",
     "C:\\Users\\saram\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.7\\microsoft.aspnetcore.openapi.7.0.7.nupkg.sha512",
     "C:\\Users\\saram\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\saram\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

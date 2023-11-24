@@ -150,3 +150,5 @@ G:\interview tasks\New folder\DriveSystemWebApplication\DriveSystemWebApplicatio
 G:\interview tasks\New folder\DriveSystemWebApplication\DriveSystemWebApplicationAPI\DriveSystemWebApplication\obj\Debug\net7.0\DriveSystemWebApplication.pdb
 G:\interview tasks\New folder\DriveSystemWebApplication\DriveSystemWebApplicationAPI\DriveSystemWebApplication\obj\Debug\net7.0\DriveSystemWebApplication.genruntimeconfig.cache
 G:\interview tasks\New folder\DriveSystemWebApplication\DriveSystemWebApplicationAPI\DriveSystemWebApplication\obj\Debug\net7.0\ref\DriveSystemWebApplication.dll
+G:\interview tasks\New folder\DriveSystemWebApplication\DriveSystemWebApplicationAPI\DriveSystemWebApplication\obj\Debug\net7.0\DriveSystemWebApplication.sourcelink.json
+G:\interview tasks\New folder\DriveSystemWebApplication\DriveSystemWebApplicationAPI\DriveSystemWebApplication\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

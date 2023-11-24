@@ -4,9 +4,12 @@ using DriveSystemWebApplication.DtosManger.UserDtosManager;
 using DriveSystemWebApplication.DtosManger.UserDtosManager.UserDtos;
 using DriveSystemWebApplication.Models;
 using DriveSystemWebApplication.Repository.FileRepository;
+using DriveSystemWebApplication.Repository.TokenBlacklistRepository;
 using DriveSystemWebApplication.Repository.UserRepository;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 namespace DriveSystemWebApplication
 {
@@ -16,19 +19,9 @@ namespace DriveSystemWebApplication
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-           .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-           {
-               options.LoginPath = "/api/auth/login";
-               options.LogoutPath = "/api/auth/signout";
-
-           });
             builder.Services.AddControllers();
 
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -40,7 +33,9 @@ namespace DriveSystemWebApplication
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserDtoManger, UserDtoManager>();
-          
+
+            builder.Services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowClientAccess",
@@ -51,6 +46,20 @@ namespace DriveSystemWebApplication
                         builder.AllowAnyHeader();
                     });
             });
+            builder.Services.AddAuthentication(options => options.DefaultAuthenticateScheme = "DriveScheme")
+              .AddJwtBearer("DriveScheme", options =>
+              {
+                  string secretKey = "DriveWebAppAPIDevelopedByCodid";
+                  var encodedSecretKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+                  options.TokenValidationParameters = new TokenValidationParameters()
+                  {
+                      IssuerSigningKey = encodedSecretKey,
+                      ValidateIssuer = false,
+                      ValidateAudience = false,
+                      ValidateLifetime = true,
+                      ClockSkew = TimeSpan.Zero
+                  };
+              });
 
             var app = builder.Build();
 
@@ -61,10 +70,13 @@ namespace DriveSystemWebApplication
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseHttpsRedirection();
+
+            app.UseCors("AllowClientAccess");
 
             app.UseAuthentication();
-            app.UseAuthorization();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 

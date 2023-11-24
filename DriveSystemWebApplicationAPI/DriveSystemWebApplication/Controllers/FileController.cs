@@ -101,7 +101,6 @@ namespace DriveSystemWebApplication.Controllers
 
         private string GetContentType(string fileExtension)
         {
-            // You can add more file extensions and corresponding MIME types as needed
             switch (fileExtension.ToLower())
             {
                 case ".txt":

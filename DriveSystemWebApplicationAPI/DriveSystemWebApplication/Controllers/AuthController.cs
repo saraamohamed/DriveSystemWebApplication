@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
 using DriveSystemWebApplication.DtosManger.UserDtosManager.UserDtos;
-using DriveSystemWebApplication.Repository.UserRepository;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using DriveSystemWebApplication.DtosManger.UserDtosManager;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using DriveSystemWebApplication.Validators;
+using DriveSystemWebApplication.Repository.TokenBlacklistRepository;
+
 
 namespace DriveSystemWebApplication.Controllers
 {
@@ -12,48 +15,68 @@ namespace DriveSystemWebApplication.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserDtoManger userDtosManager;
+        private readonly ITokenBlacklistService tokenBlacklistService;
 
-        public AuthController(IUserRepository userRepository)
+        public AuthController(IUserDtoManger userDtosManager, ITokenBlacklistService tokenBlacklistService)
         {
-            _userRepository = userRepository;
+            this.userDtosManager = userDtosManager;
+            this.tokenBlacklistService = tokenBlacklistService;
+
         }
 
         [HttpPost("login")]
-        public IActionResult LoginUser(UserCredentialsDto credentials)
+        public IActionResult AuthenticateLogger(UserCredentialsDto userCredentials)
         {
-            var user = _userRepository.GetByCredentials(credentials.Email, credentials.Password);
+            var user = userDtosManager
+                .GetUserDtoByUserCredentials(userCredentials);
 
             if (user != null)
             {
-                // Your authentication logic
-                ClaimsIdentity claims = new ClaimsIdentity(new[]
+                GlobalSessionValidator.IsInSession = true;
+
+                List<Claim> userIdentityClaims = new()
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.SerialNumber, user.UserId.ToString())
+                   
+                };
 
-                    // Add more claims as needed
-                });
-                ClaimsPrincipal principal = new ClaimsPrincipal(claims);
 
+                // Define a secret key for the current token.
+                string secretKey = "DriveWebAppAPIDevelopedByCodid";
+                var encodedSecretKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                // Write the token.
+                var signingCredentials = new SigningCredentials(encodedSecretKey, SecurityAlgorithms.HmacSha256);
 
-                return Ok("Login successful");
+                var token = new JwtSecurityToken(
+                    claims: userIdentityClaims,
+                    signingCredentials: signingCredentials,
+                    expires: DateTime.Now.AddDays(1));
+
+                var stringifiedToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+                return Ok(new { generatedJwtToken = stringifiedToken });
             }
 
-            return BadRequest("Invalid credentials");
+            return Unauthorized();
         }
-
-        [Authorize]
-        [HttpPost("signout")]
-        public IActionResult SignOut()
+        [HttpPost("logout")]
+        public IActionResult Logout()
         {
-            
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            //Response.Headers.Remove("Authorization");
+            // During logout, add the current user's token to the blacklist
+            var currentToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            tokenBlacklistService.AddToBlacklist(currentToken);
 
-            return Ok("Sign out successful");
+            GlobalSessionValidator.IsInSession = false;
+
+            return Ok("Logout successful");
+
+
         }
-
     }
-}
+
+ }
+

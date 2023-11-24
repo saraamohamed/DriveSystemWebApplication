@@ -1,4 +1,5 @@
 ﻿
+using DriveSystemWebApplication.Models;
 using DriveSystemWebApplication.Repository.UserRepository;
 
 namespace DriveSystemWebApplication.DtosManger.UserDtosManager.UserDtos
@@ -26,23 +27,29 @@ namespace DriveSystemWebApplication.DtosManger.UserDtosManager.UserDtos
             throw new NotImplementedException();
         }
 
-        public UserDto? GetUserDtoByUserCredentials(UserCredentialsDto userCredentialsDto)
+        public User? GetUserDtoByUserCredentials(UserCredentialsDto userCredentialsDto)
         {
             
-                var user = userRepository
+                var userDto = userRepository
                     .GetByCredentials(userCredentialsDto.Email,
                                       userCredentialsDto.Password);
+                if (userDto != null)
+                {
+                    var user = new User();
+                    user.UserId = userDto.UserId;
+                    user.FirstName= userDto.FirstName;
+                    user.LastName= userDto.LastName;
+                    user.Email = userDto.Email;
+                    user.Password = userDto.Password;
+                    user.ConfirmPassword= userDto.ConfirmPassword;
+                    return user ;
 
-                return user == null ?
-                       null
-                       : new UserDto(
-                        user.FirstName,
-                        user.LastName,
-                        user.Email,
-                        user.Password,
-                        user.ConfirmPassword);
-            
-
+                }
+                else
+                {
+                    return null;
+                }
+               
         }
 
         public bool InsertEntityUsingDto(UserDto entity)
