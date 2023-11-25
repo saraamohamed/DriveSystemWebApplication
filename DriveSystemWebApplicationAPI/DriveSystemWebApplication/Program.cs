@@ -2,6 +2,7 @@ using DriveSystemWebApplication.DtosManger.FileDtoManger;
 using DriveSystemWebApplication.DtosManger.FileDtoManger.FileDtos;
 using DriveSystemWebApplication.DtosManger.UserDtosManager;
 using DriveSystemWebApplication.DtosManger.UserDtosManager.UserDtos;
+using DriveSystemWebApplication.Middelware;
 using DriveSystemWebApplication.Models;
 using DriveSystemWebApplication.Repository.FileRepository;
 using DriveSystemWebApplication.Repository.TokenBlacklistRepository;
@@ -34,7 +35,13 @@ namespace DriveSystemWebApplication
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserDtoManger, UserDtoManager>();
 
-            builder.Services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
+            builder.Services.AddTransient<TokenManagerMiddleware>();
+            builder.Services.AddSingleton<ITokenReposiatory, TokenRepository>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost";
+            });
 
             builder.Services.AddCors(options =>
             {
@@ -75,6 +82,8 @@ namespace DriveSystemWebApplication
             app.UseCors("AllowClientAccess");
 
             app.UseAuthentication();
+
+            app.UseMiddleware<TokenManagerMiddleware>();
 
             app.UseAuthorization();
 

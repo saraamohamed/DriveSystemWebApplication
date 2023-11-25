@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DriveSystemWebApplication")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01a88557374518f4f945ed62518cca3e33c3f72f")]
 [assembly: System.Reflection.AssemblyProductAttribute("DriveSystemWebApplication")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DriveSystemWebApplication")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

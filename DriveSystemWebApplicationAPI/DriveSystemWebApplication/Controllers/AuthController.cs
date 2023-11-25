@@ -16,12 +16,19 @@ namespace DriveSystemWebApplication.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserDtoManger userDtosManager;
-        private readonly ITokenBlacklistService tokenBlacklistService;
+        private readonly ITokenReposiatory tokenReposiatory;
 
-        public AuthController(IUserDtoManger userDtosManager, ITokenBlacklistService tokenBlacklistService)
+        public AuthController(IUserDtoManger userDtosManager,ITokenReposiatory tokenReposiatory)
         {
             this.userDtosManager = userDtosManager;
-            this.tokenBlacklistService = tokenBlacklistService;
+            this.tokenReposiatory = tokenReposiatory;
+        }
+        [HttpPost("register")]
+        public IActionResult AddAccount(UserDto NewAccount)
+        {
+            return userDtosManager.InsertEntityUsingDto(NewAccount) ?
+                Ok("Registration successful") : BadRequest("Invalid request");
+
 
         }
 
@@ -63,18 +70,11 @@ namespace DriveSystemWebApplication.Controllers
             return Unauthorized();
         }
         [HttpPost("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> CancelAccessToken()
         {
-            //Response.Headers.Remove("Authorization");
-            // During logout, add the current user's token to the blacklist
-            var currentToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            tokenBlacklistService.AddToBlacklist(currentToken);
+            await tokenReposiatory.DeactivateCurrentAsync();
 
-            GlobalSessionValidator.IsInSession = false;
-
-            return Ok("Logout successful");
-
-
+            return NoContent();
         }
     }
 
